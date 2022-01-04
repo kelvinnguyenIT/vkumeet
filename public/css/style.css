@@ -565,7 +565,7 @@ ol {
 
 }
 .dropupContentTitle p{
-    font-family: 'Roboto',arial,sans-serif;
+    font-family: 'Poppins', sans-serif;
     color:#3C1A5B!important;
     font-size: 18px;
 }
@@ -584,7 +584,7 @@ ol {
     border: 1px solid white;
     text-align: left;
     font-size: 15px!important;
-    font-family: 'Roboto',arial,sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 .timeBar{
     width: 40%;
@@ -644,47 +644,234 @@ ol {
   #Home {background-color:  #ecf0f1;}
   #News {background-color:  #ecf0f1;}
   .listUser{
-      width: 100%;
-      height: auto;
-      float: left;
-      margin-top: 5%;
+      width: 26%;
+      height: 82%;
+      float: right;
+	  border-radius: 2%;
+	  margin: 1%;
+      background-color: white;
+	  color: grey;
+	  padding: 1.5%;
   }
+  .listUserTitle{
+width: 100%;
+height: auto;
+float: left;
+  }
+  .btn-addUser{
+	width: 100%;
+	height: auto;
+	float: left;
+	  }
+	  .btn-addUser button{
+		  background-color: transparent;
+		  border: none;
+		  font-family: 'Poppins', sans-serif;
+		  font-size: 14px;
+		  padding: 5px;
+	  }
+	  .btn-addUser button:hover{
+		background-color: rgb(248, 248, 248);
+    -webkit-transition: .3s all ease;
+    -o-transition: .3s all ease;
+    transition: .3s all ease;
+	}
   .userInRoom{
       width: 100%;
       height: auto;
       float: left;
+	  font-family: 'Poppins', sans-serif;
+	  margin-top: 5%;
   }
-  .userInRoom img{
+  .userInRoomList{
+	width: 100%;
+	height: auto;
+	float: left;
+}
+  .userInRoomList img{
       width: 30px;
       height: 30px;
       float: left;
       border-radius: 50%;
   }
-  .userInRoom p{
+  .userInRoomList p{
       float: left;
-      font-family: 'Roboto',arial,sans-serif;
-      color: #555;
+      font-family: 'Poppins', sans-serif;
+      color: #333333;
     margin-left: 5%;
     margin-top: 1%;
   }
+  .userInfo{
+	width: 70%;
+	height: auto;
+	float: left;
+	
+	
+  }
+  .performUser{
+	width: 30%;
+	height: auto;
+	float: left;
+	
+	
+  }
+  .performUser button{
+    height: 35px;
+    width: 35px;
+    border-radius: 70%;
+    position: relative;
+    margin-left: 1%;
+	background-color: transparent;
+	border: none;
+}	
+.performUser button:hover{
+    background-color: rgb(243, 243, 243);
+    -webkit-transition: .3s all ease;
+    -o-transition: .3s all ease;
+    transition: .3s all ease;
+}
+
+.infoRoom{
+	width: 26%;
+	height: 82%;
+	float: right;
+	border-radius: 2%;
+	margin: 1%;
+	background-color: white;
+	color: grey;
+	padding: 1.5%;
+}
+.infoRoomTitle{
+width: 100%;
+height: auto;
+float: left;
+}
+.infoRoomDetail{
+	width: 100%;
+	height: auto;
+	float: left;
+	font-family: 'Poppins', sans-serif;
+	margin-top: 5%;
+}
+
+.chatboxRoom{
+	width: 26%;
+	height: 82%;
+	float: right;
+	border-radius: 2%;
+	margin: 1%;
+	background-color: white;
+	color: grey;
+	padding: 1.5%;
+	font-family: 'Poppins', sans-serif;
+      color: #333333;
+}
+.chatboxRoomTitle{
+width: 100%;
+height: auto;
+float: left;
+font-family: 'Poppins', sans-serif;
+      color: #333333;
+}
+
+.chatboxRoomWarning{
+	width: 100%;
+	height: auto;
+	float: left;
+	font-family: 'Poppins', sans-serif;
+	background-color: rgb(243, 243, 243);
+	margin-top: 5%;
+	border-radius: 5px;
+	padding: 5px;
+	text-align: center;
+}
 .childSidebar{
     margin-top: 11%;
     text-align: left;
     background-color: white;
     padding: 5%;
 }
+.chatboxConversation{
+	width: 100%;
+	height: 360px;
+	float: left;
+	font-family: 'Poppins', sans-serif;
+      color: #333333;
+}
+.chatboxConversationView{
+	width: 100%;
+	height: 81%;
+	float: left;
+	font-family: 'Poppins', sans-serif;
+      color: #333333;
+	  margin-top: 3%;
+}
+.chatboxInputText{
+	width: 100%;
+	height: 13%;
+	float: left;
+	font-family: 'Poppins', sans-serif;
+	
+	border-radius: 25px;
+	background-color: rgb(243, 243, 243);
+      color: #333333;
+	  margin-top: 5%;
+}
+.chatboxInputText button{
+	height: 100%;
+    width: 5%;
+    border-radius: 70%;
+    position: relative;
+    margin-left: 1%;
+	background-color: transparent;
+	border: none;
+}
+.chatboxInputText input{
+	width: 85%;
+	height: 100%;
+	float: left;
+	border: none;
+	font-family: 'Poppins', sans-serif;
+	background-color: transparent;
+      color: #333333;
+	  font-size: 12px;
+	  padding-left: 5%;
+}
 .bottomBar{
     width: 100%;
-    height: 100px;
-    background-color: white;
+    height: 80px;
     position: fixed;
     bottom: 0;
     float: left;
 }
 .detailRoom{
     width: 20%;
-    height: 100px;
+    height: 80px;	
     float: left;
+}
+.clockRoom{
+    width: 40%;
+    height: 30px;	
+    float: left;
+	color:white;
+    text-align: right;
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+	margin: auto;
+	padding-top: 25px;
+}
+
+.idRoom{
+    width: 60%;
+    height: 80px;	
+    float: left;
+	color:white;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+	margin: auto;
+	padding-top: 25px;
+	padding-top: 25px;
 }
 .dropup{
     width: 100%;
@@ -707,20 +894,55 @@ ol {
 
 }
 .operationRoom{
-    width: 65%;
-    height: 100px;
+    width: 60%;
+    height: 80px;
     text-align: center;
     float: left;
 }
 .operationRoom button{
-    height: 60px;
-    width: 60px;
+    height: 45px;
+    width: 45px;
     border-radius: 70%;
     position: relative;
     margin-left: 1%;
-    top: 20%;
-    background-color: transparent;
-    border: 1px solid rgb(214, 214, 214);
+    top: 15%;
+    background-color: #3c4043;
+	border: 1px solid #3c4043;
+}
+.conversationRoom{
+	width: 20%;
+    height: 80px;
+    text-align: center;
+    float: left;
+}
+.conversationRoom button{
+    height: 45px;
+    width: 45px;
+    border-radius: 70%;
+    position: relative;
+    margin-left: 1%;
+    top: 15%;
+    background-color: #3c4043;
+	border: 1px solid #3c4043;
+}	
+.conversationRoom button:hover{
+    filter: brightness(90%);
+    box-shadow: 3px 5px 18px 1px #888888;
+    -webkit-transition: .3s all ease;
+    -o-transition: .3s all ease;
+    transition: .3s all ease;
+}
+#btnOff{
+	height: 45px;
+    width: 65px;
+    border-radius:45%;
+    position: relative;
+    margin-left: 1%;
+    top: 15%;
+	text-align: center;
+	
+    background-color: #3c4043;
+	border: 1px solid #3c4043;
 }
 .operationRoom button:hover{
     filter: brightness(90%);
@@ -729,6 +951,7 @@ ol {
     -o-transition: .3s all ease;
     transition: .3s all ease;
 }
+
 .presentRoom{
     width: 10%;
     height: 100px;
@@ -759,6 +982,95 @@ ol {
 .canvas-open {
 	display: none;
 }
+
+.listUser-disapear {
+	display: none;
+	
+	  &.active {
+		animation: slide-in 1000ms;
+		
+	  }
+  
+		  &.out {
+			animation: slide-out 1000ms;
+		  }
+	  }
+
+	  .infoRoom-disapear {
+		display: none;
+		
+		  &.active {
+			animation: slide-in 1000ms;
+			
+		  }
+	  
+			  &.out {
+				animation: slide-out 1000ms;
+			  }
+		  }
+		  .chatboxRoom-disapear {
+			display: none;
+			
+			  &.active {
+				animation: slide-in 1000ms;
+				
+			  }
+		  
+				  &.out {
+					animation: slide-out 1000ms;
+				  }
+			  }
+	  @keyframes slide-in {
+		from {
+		  transform: translateX(-100%);
+		}
+		to {
+		  transform: translateX(0%);
+		}
+	  }
+	  @keyframes slide-out {
+		from {
+		  transform: translateX(0%);
+		}
+		to {
+		  transform: translateX(-100%);
+		}
+	  }
+  @keyframes scale-display {
+	  0% {
+		  opacity: 0;
+		  transform: scale(0);
+	  -webkit-transform: scale(0);
+	  }
+  
+	  100% {
+		  opacity: 1;
+		  transform: scale(1);
+	  -webkit-transform: scale(1);
+	  }
+  }
+  
+  @keyframes scale-display--reversed {
+	  0% {
+		  display: inline-flex;
+		  opacity: 1;
+		  transform: scale(1);
+		  -webkit-transform: scale(1);
+	  }
+	  99% {
+		  display: inline-flex;
+		  opacity: 0;
+		  transform: scale(0);
+		  -webkit-transform: scale(0);
+	  }
+	  100% {
+		  display: none;
+		  opacity: 0;
+		  transform: scale(0);
+		  -webkit-transform: scale(0);
+	  }
+  }
+  
 .listCam{
     width: 100%;
     height: auto;
@@ -766,12 +1078,12 @@ ol {
 }
 .camlocal{
     width: 60%;
-    height: auto;
+    height: 500px;
     float: left;
 }
 .camremote{
     width: 40%;
-    height: auto;
+    height: 500px;
     float: left;
 }
 .EIlDfe{

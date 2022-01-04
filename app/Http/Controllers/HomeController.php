@@ -8,7 +8,7 @@ class HomeController extends Controller
 {
     public function viewConferenceRoom(Request $request)
     {
-        $request->session()->put('idRoom',$request->r);
-        return view('ConferenceRoom.index');
+        $idRoom = $request->r;
+        return view('ConferenceRoom.index',compact("idRoom"));
     }
 }

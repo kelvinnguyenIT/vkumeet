@@ -1,22 +1,32 @@
 {
-  "name": "vkumeet",
-  "version": "1.0.0",
-  "description": "<p align=\"center\"><a href=\"https://laravel.com\" target=\"_blank\"><img src=\"https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg\" width=\"400\"></a></p>",
-  "main": "server.js",
-  "directories": {
-    "test": "tests"
-  },
-  "scripts": {
-    "test": "tesst"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "express": "^4.17.1",
-    "socket.io": "^4.4.0"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.15"
-  }
+    "name": "vkumeet",
+    "version": "1.0.0",
+    "description": "<p align=\"center\"><a href=\"https://laravel.com\" target=\"_blank\"><img src=\"https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg\" width=\"400\"></a></p>",
+    "main": "server.js",
+    "directories": {
+        "test": "tests"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "nodemon server.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/kelvinnguyenIT/vkumeet.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/kelvinnguyenIT/vkumeet/issues"
+    },
+    "homepage": "https://github.com/kelvinnguyenIT/vkumeet#readme",
+    "dependencies": {
+        "express": "^4.17.2",
+        "socket.io": "^4.4.0",
+        "socket.io-client": "^4.4.0"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.15"
+    }
 }

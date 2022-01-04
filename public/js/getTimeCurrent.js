@@ -1,5 +1,5 @@
 
-                            var div = document.getElementById('timeBar');
+                            var div = document.getElementById("clockRoom");
                             function time() {
                             div.innerHTML = "";
                             var d = new Date();

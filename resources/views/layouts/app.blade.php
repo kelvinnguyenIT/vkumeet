@@ -49,7 +49,6 @@
     <script src="{{asset('/js/copyToClipBoard.js')}}"></script>
     <script src="{{asset('/js/main.js')}}"></script>
     <script src="{{asset('/js/chat.js')}}"></script>
-    <script src="/js/peerjs.min.js"></script>
     
     <script src="/js/tablink.js"></script>
     <script src="/js/jquery-3.3.1.min.js"></script>
@@ -60,9 +59,12 @@
     <script src="/js/jquery.slicknav.js"></script>
     <script src="/js/owl.carousel.min.js"></script>
     <script src="/js/copyToClipBoard.js"></script>
-    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
     <script src="/js/main.js"></script>
-
     <script src="https://js.pusher.com/4.1/pusher.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
