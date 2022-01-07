@@ -41,6 +41,8 @@ let roomList = [
 
 io.on("connection", (socket) => {
     socket.on("CHECK_ROOM", (roomId, peerId, userInfo) => {
+        socket.peerId = peerId;
+        socket.roomId = roomId;
         if (roomList[0][[roomId]] == null) {
             roomList[0][[roomId]] = [];
             var user = {
@@ -74,5 +76,32 @@ io.on("connection", (socket) => {
 
             console.log(socket.broadcast.emit("NEW_USER_JOIN", user[peerId]));
         }
+
+        socket.on('OPEN_MIC',peerId=>{
+            socket.broadcast.emit("ON_OPEN_MIC", peerId)
+        })
+        
+        socket.on('MUTE_MIC',peerId=>{
+            socket.broadcast.emit("ON_MUTE_MIC", peerId)
+        })
+
+        socket.on('HIDE_VIDEO',peerId=>{
+            socket.broadcast.emit("ON_HIDE_VIDEO", peerId)
+        })
+
+        socket.on('SHOW_VIDEO',peerId=>{
+            socket.broadcast.emit("ON_SHOW_VIDEO", peerId)
+        })
+
+        // socket.on('SHARE_SCREEN',(screenTrack,peerId)=>{
+        //     console.log(screenTrack);
+        // })
+
     });
 });
+// socket.on("disconnect", () => {
+//     const index = roomList[0][[socket.roomId]].findIndex(
+//         (user) => Object.keys(user) == socket.peerId
+//     );
+//     console.log(index);
+// });

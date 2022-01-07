@@ -3,7 +3,7 @@ var socket_port = "8005";
 var socket = io(ip_address + ":" + socket_port);
 
 function openStream() {
-    const config = { audio: false, video: true };
+    const config = { audio: true, video: true };
     return navigator.mediaDevices.getUserMedia(config);
 }
 
@@ -20,11 +20,13 @@ function playStream(stream, locationId, peerId) {
 
 function RTCConnection(roomId, user) {
     var previousUser = {};
+    var trackList = [{}];
     var clickListUser = 0;
     var clickInfo = 0;
     var clickChatbox = 0;
     var clickMic = 0;
     var clickVideo = 0;
+    var remoteOld = "";
     var peer = new Peer();
     peer.on("open", (id) => {
         socket.emit("CHECK_ROOM", roomId, id, user[0]);
@@ -37,6 +39,10 @@ function RTCConnection(roomId, user) {
 
                     openStream().then((stream) => {
                         // console.log("User List 1: " + call.peer);
+                        trackList[0][[id]] = [];
+                        trackList[0][[id]].push(stream.getTracks());
+
+                        socket.stream = stream;
                         playStream(stream, "localStream", id);
                     });
                     $("#userInRoom").append(
@@ -70,6 +76,9 @@ function RTCConnection(roomId, user) {
             } else {
                 if (userList.length > 1) {
                     openStream().then((stream) => {
+                        socket.stream = stream;
+                        trackList[0][[id]] = [];
+                        trackList[0][[id]].push(stream.getTracks());
                         playStream(stream, "localStream", id);
                     });
                     userList.forEach((user) => {
@@ -81,11 +90,19 @@ function RTCConnection(roomId, user) {
                                 stream
                             );
                             call.on("stream", (remoteStream) => {
-                                playStream(
-                                    remoteStream,
-                                    "remoteStream",
-                                    user[keys][0].peerId
-                                );
+                                if (call.peer != remoteOld) {
+                                    remoteOld = call.peer;
+                                    trackList[0][[call.peer]] = [];
+                                    trackList[0][[call.peer]].push(
+                                        remoteStream.getTracks()
+                                    );
+
+                                    playStream(
+                                        remoteStream,
+                                        "remoteStream",
+                                        user[keys][0].peerId
+                                    );
+                                }
                             });
                         });
                         $("#userInRoom").append(
@@ -120,6 +137,7 @@ function RTCConnection(roomId, user) {
             }
 
             socket.on("NEW_USER_JOIN", (newUser) => {
+                console.log("new user join");
                 if (typeof previousUser[0] == "undefined") {
                     previousUser = newUser;
                     $("#userInRoom").append(
@@ -317,6 +335,13 @@ function RTCConnection(roomId, user) {
                 $("#btnAudio").empty();
                 $("#btnAudio").append(iconMicOpen);
                 $("#btnAudio").css("background-color", "#ea4335");
+
+                socket.emit("MUTE_MIC", id);
+                socket.stream.getAudioTracks()[0].enabled = false;
+
+                socket.on("ON_MUTE_MIC", (peerResponse) => {
+                    trackList[0][[peerResponse]][0][0].enabled = false;
+                });
             }
 
             if (clickMic == 1) {
@@ -325,6 +350,13 @@ function RTCConnection(roomId, user) {
                 $("#btnAudio").empty();
                 $("#btnAudio").append(iconMicOpen);
                 $("#btnAudio").css("background-color", "#3c4043");
+
+                socket.emit("OPEN_MIC", id);
+                socket.stream.getAudioTracks()[0].enabled = true;
+
+                socket.on("ON_OPEN_MIC", (peerResponse) => {
+                    trackList[0][[peerResponse]][0][0].enabled = true;
+                });
             }
 
             clickMic += 1;
@@ -340,6 +372,13 @@ function RTCConnection(roomId, user) {
                 $("#btnVideo").empty();
                 $("#btnVideo").append(iconVideoOpen);
                 $("#btnVideo").css("background-color", "#ea4335");
+
+                socket.emit("HIDE_VIDEO", id);
+                socket.stream.getVideoTracks()[0].enabled = false;
+
+                socket.on("ON_HIDE_VIDEO", (peerResponse) => {
+                    trackList[0][[peerResponse]][0][1].enabled = false;
+                });
             }
 
             if (clickVideo == 1) {
@@ -348,6 +387,13 @@ function RTCConnection(roomId, user) {
                 $("#btnVideo").empty();
                 $("#btnVideo").append(iconVideoOpen);
                 $("#btnVideo").css("background-color", "#3c4043");
+
+                socket.emit("SHOW_VIDEO", id);
+                socket.stream.getVideoTracks()[0].enabled = true;
+
+                socket.on("ON_SHOW_VIDEO", (peerResponse) => {
+                    trackList[0][[peerResponse]][0][1].enabled = true;
+                });
             }
 
             clickVideo += 1;
@@ -355,17 +401,51 @@ function RTCConnection(roomId, user) {
                 clickVideo = 0;
             }
         });
-    });
 
-    peer.on("call", (call) => {
-        openStream().then((stream) => {
-            call.answer(stream);
-            call.on("stream", (remoteStream) => {
-                console.log(
-                    "User Join answer: " + call.peer + " local id: " + id
-                );
+        $("#btnShareScreen").on("click", function (e) {
+            $("#btnShareScreen").css("background-color", "#6200ee");
+            navigator.mediaDevices
+                .getDisplayMedia({ cursor: true })
+                .then((stream) => {
+                    var screenTrack = stream.getTracks()[0];
+                    // trackList[0][[id]][0][1].replaceTrack(screenTrack);
+                    console.log(screenTrack);
+                });
+        });
 
-                // playStream(remoteStream, "remoteStream", call.peer);
+        socket.on("ON_OPEN_MIC", (peerResponse) => {
+            trackList[0][[peerResponse]][0][0].enabled = true;
+        });
+
+        socket.on("ON_MUTE_MIC", (peerResponse) => {
+            trackList[0][[peerResponse]][0][0].enabled = false;
+        });
+
+        socket.on("ON_HIDE_VIDEO", (peerResponse) => {
+            console.log(peerResponse);
+            trackList[0][[peerResponse]][0][1].enabled = false;
+        });
+
+        socket.on("ON_SHOW_VIDEO", (peerResponse) => {
+            trackList[0][[peerResponse]][0][1].enabled = true;
+        });
+
+        peer.on("call", (call) => {
+            openStream().then((stream) => {
+                call.answer(stream);
+                call.on("stream", (remoteStream) => {
+                    if (call.peer != id && call.peer != remoteOld) {
+                        remoteOld = call.peer;
+                        trackList[0][[call.peer]] = [];
+                        trackList[0][[call.peer]].push(
+                            remoteStream.getTracks()
+                        );
+                        console.log(trackList[0]);
+                        playStream(remoteStream, "remoteStream", call.peer);
+                    }
+
+                    // playStream(remoteStream, "remoteStream", call.peer);
+                });
             });
         });
     });

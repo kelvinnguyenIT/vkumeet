@@ -172,7 +172,7 @@
                     </g>
                 </svg>
             </button>
-            <button id="#">
+            <button id="btnShareScreen">
                 <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0 0 226 226"
                     style=" fill:#000000;">
                     <g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt"

@@ -652,6 +652,9 @@ ol {
       background-color: white;
 	  color: grey;
 	  padding: 1.5%;
+	  position: absolute;
+	  top: 0;
+	  right: 0;
   }
   .listUserTitle{
 width: 100%;
@@ -740,6 +743,9 @@ float: left;
 	background-color: white;
 	color: grey;
 	padding: 1.5%;
+	position: absolute;
+	  top: 0;
+	  right: 0;
 }
 .infoRoomTitle{
 width: 100%;
@@ -765,6 +771,9 @@ float: left;
 	padding: 1.5%;
 	font-family: 'Poppins', sans-serif;
       color: #333333;
+	  position: absolute;
+	  top: 0;
+	  right: 0;
 }
 .chatboxRoomTitle{
 width: 100%;
