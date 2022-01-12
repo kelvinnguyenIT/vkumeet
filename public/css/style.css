@@ -714,7 +714,8 @@ float: left;
   .performUser{
 	width: 30%;
 	height: auto;
-	float: left;
+	float: right;
+	text-align: right;
 	
 	
   }
@@ -722,10 +723,10 @@ float: left;
     height: 35px;
     width: 35px;
     border-radius: 70%;
-    position: relative;
     margin-left: 1%;
 	background-color: transparent;
 	border: none;
+	right: 0;
 }	
 .performUser button:hover{
     background-color: rgb(243, 243, 243);
@@ -814,6 +815,16 @@ font-family: 'Poppins', sans-serif;
 	font-family: 'Poppins', sans-serif;
       color: #333333;
 	  margin-top: 3%;
+}
+.messageChild{
+	width: 100%;
+	height: auto;
+	float: left;
+}
+.messageChild p{
+	font-family: 'Poppins', sans-serif;
+      color: #333333;
+	font-size: 12px;
 }
 .chatboxInputText{
 	width: 100%;

@@ -32,7 +32,7 @@
     <div class="listUser listUser-disapear">
         <div class="listUserTitle">
             <p style="font-family: 'Poppins', sans-serif;
-                font-size: 18px;color: #333333">People</p>
+                    font-size: 18px;color: #333333">People</p>
         </div>
         <div class="btn-addUser">
             <button><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0 0 172 172"
@@ -51,9 +51,14 @@
                 </svg>
                 <span>Add people</span></button>
         </div>
+
+        <div class="userInRoom" id="raseHandRoom" >
+            <p style="color: #333333;font-family: 'Poppins', sans-serif;">Rase hand</p>
+
+        </div>
         <div class="userInRoom" id="userInRoom">
             <p style="color: #333333;font-family: 'Poppins', sans-serif;">In call</p>
-            
+
         </div>
     </div>
 
@@ -61,7 +66,7 @@
     <div class="infoRoom infoRoom-disapear">
         <div class="infoRoomTitle">
             <p style="font-family: 'Poppins', sans-serif;
-                font-size: 18px;color: #333333">Meeting details</p>
+                    font-size: 18px;color: #333333">Meeting details</p>
         </div>
         <div class="infoRoomDetail">
             <p style="color: #333333;font-family: 'Poppins', sans-serif;">Joining info</p>
@@ -92,7 +97,7 @@
     <div class="chatboxRoom chatboxRoom-disapear">
         <div class="chatboxRoomTitle">
             <p style="font-family: 'Poppins', sans-serif;
-                font-size: 18px;color: #333333">In-call messages</p>
+                    font-size: 18px;color: #333333">In-call messages</p>
         </div>
         <div class="chatboxRoomWarning">
             <span style="color: #333333;font-family: 'Poppins', sans-serif;font-size: 12px;">Messages can only be seen by
@@ -100,12 +105,12 @@
         </div>
         <div class="chatboxConversation">
             <div class="chatboxConversationView">
-                <p>fasfasf</p>
+                
             </div>
             <div class="chatboxInputText">
-                <input type="text" placeholder="Send a message to everyone" style="font-family: 'Poppins', sans-serif;
-                    color: #333333;" />
-                <button><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0 0 172 172"
+                <input type="text" id="inputMessage" placeholder="Send a message to everyone" style="font-family: 'Poppins', sans-serif;
+                        color: #333333;" required/>
+                <button id="btnSendMessage"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0 0 172 172"
                         style=" fill:#000000;">
                         <g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt"
                             stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0"
@@ -188,7 +193,7 @@
                     </g>
                 </svg>
             </button>
-            <button id="#">
+            <button id="btnRaseHand">
                 <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0 0 172 172"
                     style=" fill:#000000;">
                     <g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt"
@@ -220,7 +225,7 @@
                     </g>
                 </svg>
             </button>
-            <button id="#" style="background-color: #ea4335">
+            <button id="btnOffRoom" style="background-color: #ea4335">
                 <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="30" viewBox="0 0 172 172"
                     style=" fill:#000000;">
                     <g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt"

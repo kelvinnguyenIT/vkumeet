@@ -19,14 +19,19 @@ function playStream(stream, locationId, peerId) {
 }
 
 function RTCConnection(roomId, user) {
+    
     var previousUser = {};
     var trackList = [{}];
+    var userListClient = [];
+    var userRaseHand = [];
     var clickListUser = 0;
     var clickInfo = 0;
     var clickChatbox = 0;
     var clickMic = 0;
     var clickVideo = 0;
+    var clickRaseHand = 0;
     var remoteOld = "";
+    $("#raseHandRoom").css("display", "none");
     var peer = new Peer();
     peer.on("open", (id) => {
         socket.emit("CHECK_ROOM", roomId, id, user[0]);
@@ -34,7 +39,6 @@ function RTCConnection(roomId, user) {
         socket.on("USER_LIST", (userList) => {
             if (userList.length == 1) {
                 userList.forEach((user) => {
-                    console.log(user);
                     var keys = Object.keys(user);
 
                     openStream().then((stream) => {
@@ -45,9 +49,13 @@ function RTCConnection(roomId, user) {
                         socket.stream = stream;
                         playStream(stream, "localStream", id);
                     });
+
+                    userListClient.push(user[keys][0]);
                     $("#userInRoom").append(
-                        '<div class="userInRoomList">' +
-                            '<div class="userInfo">' +
+                        '<div class="userInRoomList" id="' +
+                            user[keys][0].peerId +
+                            '-list">' +
+                            '<div class="userInfo" >' +
                             '<img src="' +
                             user[keys][0].avatar +
                             '" />' +
@@ -105,8 +113,12 @@ function RTCConnection(roomId, user) {
                                 }
                             });
                         });
+
+                        userListClient.push(user[keys][0]);
                         $("#userInRoom").append(
-                            '<div class="userInRoomList">' +
+                            '<div class="userInRoomList" id="' +
+                                user[keys][0].peerId +
+                                '-list">' +
                                 '<div class="userInfo">' +
                                 '<img src="' +
                                 user[keys][0].avatar +
@@ -137,11 +149,13 @@ function RTCConnection(roomId, user) {
             }
 
             socket.on("NEW_USER_JOIN", (newUser) => {
-                console.log("new user join");
                 if (typeof previousUser[0] == "undefined") {
                     previousUser = newUser;
+                    userListClient.push(previousUser[0]);
                     $("#userInRoom").append(
-                        '<div class="userInRoomList">' +
+                        '<div class="userInRoomList" id="' +
+                            previousUser[0].peerId +
+                            '-list">' +
                             '<div class="userInfo">' +
                             '<img src="' +
                             previousUser[0].avatar +
@@ -170,9 +184,11 @@ function RTCConnection(roomId, user) {
                 } else {
                     if (newUser[0].peerId != previousUser[0].peerId) {
                         previousUser = newUser;
-
+                        userListClient.push(previousUser[0]);
                         $("#userInRoom").append(
-                            '<div class="userInRoomList">' +
+                            '<div class="userInRoomList" id="' +
+                                previousUser[0].peerId +
+                                '-list">' +
                                 '<div class="userInfo">' +
                                 '<img src="' +
                                 previousUser[0].avatar +
@@ -409,9 +425,120 @@ function RTCConnection(roomId, user) {
                 .then((stream) => {
                     var screenTrack = stream.getTracks()[0];
                     // trackList[0][[id]][0][1].replaceTrack(screenTrack);
-                    console.log(screenTrack);
+                    var set = [];
+                    set.push(screenTrack);
+                    socket.emit("SHARE_SCREEN", set);
+                    console.log(set);
                 });
         });
+
+        $("#btnRaseHand").on("click", function (e) {
+            if (clickRaseHand == 0) {
+                // $(".infoRoom-disapear").css("display", "none");
+
+                $("#btnRaseHand").css("background-color", "#6200ee");
+
+                $("#raseHandRoom").css("display", "block");
+
+                var userRaseHandChild = [
+                    {
+                        peerId: id,
+                        avatar: user[0].avatar,
+                        email: user[0].email,
+                        name: user[0].name,
+                    },
+                ];
+
+                socket.emit("USER_RASE_HAND", userRaseHandChild);
+                userRaseHand.push(userRaseHandChild);
+
+                $("#raseHandRoom").append(
+                    '<div class="userInRoomList" id="' +
+                        id +
+                        '-rasehand">' +
+                        '<div class="userInfo">' +
+                        '<img src="' +
+                        user[0].avatar +
+                        '" />' +
+                        "<p>" +
+                        user[0].name +
+                        "</p>" +
+                        "</div>" +
+                        '<div class="performUser">' +
+                        '<button id="#">' +
+                        '<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0 0 172 172" style=" fill:#000000;">' +
+                        '<g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal">' +
+                        '<path d="M0,172v-172h172v172z" fill="none"></path>' +
+                        '<g fill="#333333">' +
+                        '<path d="M135.9875,24.08c-5.9125,0 -8.61344,4.085 -8.61344,8.7075v46.3325c0,1.89469 -1.53188,3.44 -3.44,3.44c-1.89469,0 -3.53406,-1.54531 -3.53406,-3.44v-63.70719c0.06719,-4.16563 -2.49937,-8.53281 -8.53281,-8.53281c-6.02,0 -8.61344,4.68969 -8.61344,8.62688v60.21344c0,1.90812 -1.54531,3.44 -3.44,3.44c-1.89469,0 -3.49375,-1.53188 -3.49375,-3.42656v-0.01344v-67.09344c0,-3.48031 -2.6875,-8.62688 -8.55969,-8.62688c-5.88563,0 -8.62688,5.14656 -8.62688,8.62688v70.49312c0,1.89469 -1.54531,3.44 -3.44,3.44c-1.89469,0 -3.45344,-1.54531 -3.45344,-3.44v-56.59875c0,-6.31562 -5.14656,-8.61344 -8.61344,-8.61344c-3.31906,0 -8.58656,2.23062 -8.58656,8.22375v88.96969c-0.13437,0.08063 -0.29562,0.1075 -0.45687,0.16125l-0.01344,-0.16125l-17.2,-20.64c-4.47469,-4.81062 -12.04,-4.81062 -16.85062,0c-4.82406,4.47469 -4.82406,12.04 0,16.86406l0.37625,0.49719c0.12094,0.3225 0.24187,0.645 0.47031,0.92719l29.30719,37.65188l9.39281,12.17437l-0.01344,-0.12094l1.20938,1.55875c0.01344,0 0.01344,0 0.02687,0.01344c5.375,7.12188 13.51813,11.35469 22.53469,11.86531c0.43,0.04031 0.90031,0.06719 1.38406,0.08063c0.14781,0 0.29563,0.02687 0.44344,0.02687c0.01344,0 0.02687,-0.01344 0.05375,-0.01344c0.09406,0 0.18812,0.01344 0.29562,0.01344h27.52c15.22469,0 30.96,-11.58312 30.96,-30.96c0,0 0,-103.34781 0,-108.07781c0,-4.73 -2.56656,-8.88219 -8.4925,-8.88219z"></path>' +
+                        "</g></g></svg></button></div></div>"
+                );
+            }
+            if (clickRaseHand == 1) {
+                $("#btnRaseHand").css("background-color", "#3c4043");
+
+                var userUnRaseHandChild = [
+                    {
+                        peerId: id,
+                        avatar: user[0].avatar,
+                        email: user[0].email,
+                        name: user[0].name,
+                    },
+                ];
+
+                socket.emit("USER_UN_RASE_HAND", userUnRaseHandChild);
+                for (var i = 0; i < userRaseHand.length; i++) {
+                    if (userRaseHand[i][0].peerId === id) {
+                        userRaseHand.splice(i, 1);
+                    }
+                }
+
+                var idRaseHand = "#" + id + "-rasehand";
+                $(idRaseHand).remove();
+                if (userRaseHand.length > 0) {
+                    $("#raseHandRoom").css("display", "block");
+                } else {
+                    $("#raseHandRoom").css("display", "none");
+                }
+            }
+            clickRaseHand += 1;
+            if (clickRaseHand > 1) {
+                clickRaseHand = 0;
+            }
+        });
+
+        $("#btnSendMessage").on("click", function (e) {
+            if ($("#inputMessage").val() != "") {
+                $(".chatboxConversationView").append(
+                    '<div class="messageChild">' +
+                        '<p style="margin-bottom: 0%"><b>You</b><span> ' +
+                        $("#clockRoom").text() +
+                        "</span></p>" +
+                        "<p>" +
+                        $("#inputMessage").val() +
+                        "</p>" +
+                        "</div>"
+                );
+
+                socket.emit(
+                    "SEND_MESSAGE",
+                    $("#inputMessage").val(),
+                    user[0].name
+                );
+            }
+        });
+
+        $("#inputMessage").keypress(function (event) {
+            var keycode = event.keyCode ? event.keyCode : event.which;
+            if (keycode == "13") {
+                document.getElementById("btnSendMessage").click();
+                $("#inputMessage").val("");
+            }
+        });
+
+        // $("#btnOffRoom").on("click", function (e) {
+        //     socket.emit("DISCONNECT", id);
+        // });
 
         socket.on("ON_OPEN_MIC", (peerResponse) => {
             trackList[0][[peerResponse]][0][0].enabled = true;
@@ -430,6 +557,76 @@ function RTCConnection(roomId, user) {
             trackList[0][[peerResponse]][0][1].enabled = true;
         });
 
+        socket.on("ON_USER_RASE_HAND", (userRaseHandResponse) => {
+            $("#raseHandRoom").css("display", "block");
+
+            userRaseHand.push(userRaseHandResponse[0]);
+
+            $("#raseHandRoom").append(
+                '<div class="userInRoomList" id="' +
+                    userRaseHandResponse[0].peerId +
+                    '-rasehand">' +
+                    '<div class="userInfo">' +
+                    '<img src="' +
+                    userRaseHandResponse[0].avatar +
+                    '" />' +
+                    "<p>" +
+                    userRaseHandResponse[0].name +
+                    "</p>" +
+                    "</div>" +
+                    '<div class="performUser">' +
+                    '<button id="#">' +
+                    '<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0 0 172 172" style=" fill:#000000;">' +
+                    '<g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal">' +
+                    '<path d="M0,172v-172h172v172z" fill="none"></path>' +
+                    '<g fill="#333333">' +
+                    '<path d="M135.9875,24.08c-5.9125,0 -8.61344,4.085 -8.61344,8.7075v46.3325c0,1.89469 -1.53188,3.44 -3.44,3.44c-1.89469,0 -3.53406,-1.54531 -3.53406,-3.44v-63.70719c0.06719,-4.16563 -2.49937,-8.53281 -8.53281,-8.53281c-6.02,0 -8.61344,4.68969 -8.61344,8.62688v60.21344c0,1.90812 -1.54531,3.44 -3.44,3.44c-1.89469,0 -3.49375,-1.53188 -3.49375,-3.42656v-0.01344v-67.09344c0,-3.48031 -2.6875,-8.62688 -8.55969,-8.62688c-5.88563,0 -8.62688,5.14656 -8.62688,8.62688v70.49312c0,1.89469 -1.54531,3.44 -3.44,3.44c-1.89469,0 -3.45344,-1.54531 -3.45344,-3.44v-56.59875c0,-6.31562 -5.14656,-8.61344 -8.61344,-8.61344c-3.31906,0 -8.58656,2.23062 -8.58656,8.22375v88.96969c-0.13437,0.08063 -0.29562,0.1075 -0.45687,0.16125l-0.01344,-0.16125l-17.2,-20.64c-4.47469,-4.81062 -12.04,-4.81062 -16.85062,0c-4.82406,4.47469 -4.82406,12.04 0,16.86406l0.37625,0.49719c0.12094,0.3225 0.24187,0.645 0.47031,0.92719l29.30719,37.65188l9.39281,12.17437l-0.01344,-0.12094l1.20938,1.55875c0.01344,0 0.01344,0 0.02687,0.01344c5.375,7.12188 13.51813,11.35469 22.53469,11.86531c0.43,0.04031 0.90031,0.06719 1.38406,0.08063c0.14781,0 0.29563,0.02687 0.44344,0.02687c0.01344,0 0.02687,-0.01344 0.05375,-0.01344c0.09406,0 0.18812,0.01344 0.29562,0.01344h27.52c15.22469,0 30.96,-11.58312 30.96,-30.96c0,0 0,-103.34781 0,-108.07781c0,-4.73 -2.56656,-8.88219 -8.4925,-8.88219z"></path>' +
+                    "</g></g></svg></button></div></div>"
+            );
+        });
+
+        socket.on("ON_USER_UN_RASE_HAND", (userUnRaseHandResponse) => {
+            for (var i = 0; i < userRaseHand.length; i++) {
+                if (
+                    userRaseHand[i].peerId === userUnRaseHandResponse[0].peerId
+                ) {
+                    userRaseHand.splice(i, 1);
+                }
+            }
+
+            var idUnRaseHand =
+                "#" + userUnRaseHandResponse[0].peerId + "-rasehand";
+            $(idUnRaseHand).remove();
+            if (userRaseHand.length > 0) {
+                $("#raseHandRoom").css("display", "block");
+            } else {
+                $("#raseHandRoom").css("display", "none");
+            }
+        });
+
+        socket.on("ON_SEND_MESSAGE", (message, peerName) => {
+            $(".chatboxConversationView").append(
+                '<div class="messageChild">' +
+                    '<p style="margin-bottom: 0%"><b>' +
+                    peerName +
+                    "</b><span> " +
+                    $("#clockRoom").text() +
+                    "</span></p>" +
+                    "<p>" +
+                    message +
+                    "</p>" +
+                    "</div>"
+            );
+        });
+
+        socket.on("ON_DISCONNECT", (peerDisconnect) => {
+            delete trackList[0][[peerDisconnect]];
+            var idCam = "#" + peerDisconnect;
+            var idUserList = "#" + peerDisconnect + "-list";
+            $(idCam).remove();
+            $(idUserList).remove();
+        });
+
         peer.on("call", (call) => {
             openStream().then((stream) => {
                 call.answer(stream);
@@ -440,7 +637,7 @@ function RTCConnection(roomId, user) {
                         trackList[0][[call.peer]].push(
                             remoteStream.getTracks()
                         );
-                        console.log(trackList[0]);
+
                         playStream(remoteStream, "remoteStream", call.peer);
                     }
 
