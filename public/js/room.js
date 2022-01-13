@@ -1,4 +1,6 @@
-var socket = io("http://vkumeett.herokuapp.com/");
+var ip_address = "http://vkumeett.herokuapp.com";
+var socket_port = "3000";
+var socket = io(ip_address + ":" + socket_port);
 
 function openStream() {
     const config = { audio: true, video: true };

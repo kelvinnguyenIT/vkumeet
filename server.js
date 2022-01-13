@@ -1,13 +1,14 @@
 const express = require("express");
 const app = express();
 const server = require("https").Server(app);
+const PORT = process.env.PORT || 3000;
 const io = require("socket.io")(server, {
     cors: {
         origin: "*",
     },
 });
 
-server.listen(process.env.PORT || 8005, function () {
+server.listen(PORT, function () {
     console.log("Listening port");
 });
 
