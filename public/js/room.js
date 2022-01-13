@@ -1,4 +1,4 @@
-var ip_address = "127.0.0.1";
+var ip_address = "http://vkumeett.herokuapp.com";
 var socket_port = "8005";
 var socket = io(ip_address + ":" + socket_port);
 
@@ -19,7 +19,6 @@ function playStream(stream, locationId, peerId) {
 }
 
 function RTCConnection(roomId, user) {
-    
     var previousUser = {};
     var trackList = [{}];
     var userListClient = [];
