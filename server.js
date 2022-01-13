@@ -7,7 +7,7 @@ const io = require("socket.io")(server, {
     },
 });
 
-server.listen(8005, function () {
+server.listen(process.env.PORT || 8005, function () {
     console.log("Listening port");
 });
 
