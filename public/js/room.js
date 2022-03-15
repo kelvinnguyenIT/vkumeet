@@ -1,4 +1,4 @@
-var ip_address = "http://vkumeett.herokuapp.com";
+var ip_address = "127.0.0.1";
 var socket_port = "3000";
 var socket = io(ip_address + ":" + socket_port);
 
@@ -11,8 +11,6 @@ function playStream(stream, locationId, peerId) {
     var video = document.createElement("VIDEO");
     var localStream = document.getElementById(locationId);
     video.srcObject = stream;
-    video.width = 320;
-    video.height = 240;
     video.id = peerId;
     video.play();
     localStream.appendChild(video);

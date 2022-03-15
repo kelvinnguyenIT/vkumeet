@@ -807,6 +807,7 @@ font-family: 'Poppins', sans-serif;
 	float: left;
 	font-family: 'Poppins', sans-serif;
       color: #333333;
+	  
 }
 .chatboxConversationView{
 	width: 100%;
@@ -815,6 +816,7 @@ font-family: 'Poppins', sans-serif;
 	font-family: 'Poppins', sans-serif;
       color: #333333;
 	  margin-top: 3%;
+	  overflow: scroll;
 }
 .messageChild{
 	width: 100%;
@@ -1096,16 +1098,30 @@ font-family: 'Poppins', sans-serif;
     height: auto;
     float: left;
 }
-.camlocal{
-    width: 60%;
-    height: 500px;
-    float: left;
+
+.camlocal {
+	position: absolute;
+	top: 5%;
+}
+.camlocal video{
+	height: 500px;
+	width: 100%;
+	position: absolute;
+	top: 5%;
 }
 .camremote{
-    width: 40%;
-    height: 500px;
-    float: left;
+    float: right;
+	top: 5%;
+	position: absolute;
+	
 }
+.camremote video{
+	height: 300px;
+	position: absolute;
+	top: 5%;
+	float: right;
+}
+
 .EIlDfe{
     text-align: center;
     font-family:'Roboto',arial,sans-serif;

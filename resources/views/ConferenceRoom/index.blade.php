@@ -3,30 +3,12 @@
 @section('title', 'VKU-meet Phòng họp')
 
 @section('content')
-    {{-- Header --}}
-    @php
-    $name = session()->get('name');
-    @endphp
-    <header class="header-section">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-3"></div>
-                <div class="col-lg-6"></div>
-                <div class="col-lg-3"></div>
-            </div>
-            <div class="canvas-open">
-                <i class="fa fa-bars"></i>
-            </div>
-        </div>
-    </header>
-    <!-- Header End -->
+    
 
     <!-- List Cam Local and Remote -->
-    <div class="listCam">
-        <div class="camlocal" id="localStream">
-
-        </div>
-        <div class="camremote" id="remoteStream"></div>
+    <div class="row">
+        <div class="col-lg-7 camlocal" id="localStream" ></div>
+        <div class="col-lg-5 camremote" id="remoteStream" style="background-color: red;"></div>
     </div>
 
     <div class="listUser listUser-disapear">

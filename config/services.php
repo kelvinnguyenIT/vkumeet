@@ -33,7 +33,7 @@ return [
     'google' => [
         'client_id' => env('GOOGLE_CLIENT_ID'),
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
-        'redirect' => 'https://vkumeett.herokuapp.com/login/google/callback',
+        'redirect' => 'http://127.0.0.1:8000/login/google/callback',
     ],
 
 ];
